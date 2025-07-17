@@ -7,8 +7,12 @@ services:
     # volumes:
     #   - ./services/backend:/app
     #   - /app/node_modules
-    env_file:
-      - ./services/backend/.env
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=postgresql://user:password@db:5432/app_db
+      - JWT_SECRET=your-super-secret-key-that-is-long-and-random
+    # env_file:
+    #   - ./services/backend/.env
     depends_on:
       - db
     # command: npm run dev
@@ -30,8 +34,10 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
-    env_file:
-      - ./services/backend/.env
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=app_db
 
 volumes:
   postgres_data:

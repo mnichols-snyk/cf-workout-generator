@@ -5,40 +5,40 @@ Phase 1: Foundation & Core Multi-Tenancy (Weeks 1-8)
 1.1. Project Setup & DevOps
 [x] Initialize Git repository.
 
-[ ] Set up basic Node.js (Express/Fastify) backend with TypeScript.
+[x] Set up basic Node.js (Express/Fastify) backend with TypeScript.
 
-[ ] Set up React frontend with TypeScript.
+[x] Set up React frontend with TypeScript.
 
-[ ] Configure ESLint, Prettier, and basic linting/formatting rules for both frontend and backend.
+[x] Configure ESLint, Prettier, and basic linting/formatting rules for both frontend and backend.
 
-[ ] Implement Dockerfiles for Node.js backend and React frontend.
+[x] Implement Dockerfiles for Node.js backend and React frontend.
 
-[ ] Set up docker-compose.yml for local development (backend, PostgreSQL, frontend).
+[x] Set up docker-compose.yml for local development (backend, PostgreSQL, frontend).
 
-[ ] Configure basic CI/CD pipeline (e.g., GitHub Actions) for linting, testing, and Docker image builds.
+[x] Configure basic CI/CD pipeline (e.g., GitHub Actions) for linting, testing, and Docker image builds.
 
 [ ] Establish GCP project and initial IAM roles.
 
-[ ] Implement dotenv for local environment variable management.
+[x] Implement dotenv for local environment variable management.
 
-[ ] Set up pino or winston for structured logging in Node.js.
+[x] Set up pino or winston for structured logging in Node.js.
 
 1.2. Database & Basic Authentication
-[ ] Design initial PostgreSQL schema with gyms table and tenant_id on all user-related tables.
+[x] Design initial PostgreSQL schema with gyms table and tenant_id on all user-related tables.
 
-[ ] Implement database connection pooling and ORM (Prisma/TypeORM) setup.
+[x] Implement database connection pooling and ORM (Prisma/TypeORM) setup.
 
-[ ] Develop User model (email, password hash, roles).
+[x] Develop User model (email, password hash, roles).
 
-[ ] Implement Superuser seed for initial platform admin.
+[x] Implement Superuser seed for initial platform admin.
 
-[ ] Develop Superuser login and password reset functionality (email integration).
+[x] Develop Superuser login and password reset functionality (email integration).
 
-[ ] Implement JWT-based authentication for superuser.
+[x] Implement JWT-based authentication for superuser.
 
-[ ] Implement tenant_id extraction from JWT and basic tenant context middleware.
+[x] Implement tenant_id extraction from JWT and basic tenant context middleware.
 
-[ ] Implement Row-Level Security (RLS) policies on the gyms table (and other core tenant tables as they're added) to enforce data isolation.
+[x] Implement Row-Level Security (RLS) policies on the gyms table (and other core tenant tables as they're added) to enforce data isolation.
 
 1.3. Superuser Features (Minimum Viable)
 [ ] Develop API and basic UI for Superuser to view registered gyms.

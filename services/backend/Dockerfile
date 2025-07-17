@@ -1,5 +1,5 @@
 # Stage 1: Build the application
-FROM node:18-alpine AS builder
+FROM node:18-slim AS builder
 
 WORKDIR /app
 
@@ -26,7 +26,11 @@ RUN ls -la
 RUN npm prune --production
 
 # Stage 2: Create the lean production image
-FROM node:18-alpine
+FROM node:18-slim
+
+# Install openssl for Prisma and netcat for the entrypoint wait script
+# We also clean up the apt-get cache to keep the image small.
+RUN apt-get update && apt-get install -y openssl netcat-traditional && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
@@ -34,6 +38,14 @@ WORKDIR /app
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/prisma ./prisma
+COPY --from=builder /app/package.json ./
+COPY --from=builder /app/package-lock.json ./
+
+# Copy the entrypoint script
+COPY entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
+ENTRYPOINT ["entrypoint.sh"]
 
 EXPOSE 3000
 

@@ -2,21 +2,27 @@ import { FastifyRequest, FastifyReply } from 'fastify';
 import bcrypt from 'bcrypt';
 import { prisma } from '../../db';
 import { LoginInput } from './auth.schema';
-import { Role } from '@prisma/client';
+import { withTenantContext } from '../../utils/tenant-context';
 
-export async function loginHandler(
-  request: FastifyRequest<{ Body: LoginInput }>,
-  reply: FastifyReply
-) {
+export async function loginHandler(request: FastifyRequest<{ Body: LoginInput }>, reply: FastifyReply) {
   const { email, password } = request.body;
 
-  const user = await prisma.user.findUnique({
-    where: {
-      email,
+  // Use tenant context for authentication query
+  // For login, we need to bypass RLS to find the user first
+  const user = await withTenantContext(
+    prisma,
+    null, // No tenant context for login
+    true, // Bypass RLS for authentication
+    async () => {
+      return await prisma.user.findUnique({
+        where: {
+          email,
+        },
+      });
     },
-  });
+  );
 
-  if (!user || user.role !== Role.SUPERUSER) {
+  if (!user) {
     return reply.code(401).send({ message: 'Invalid email or password' });
   }
 

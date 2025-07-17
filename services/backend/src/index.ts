@@ -1,4 +1,11 @@
-import 'dotenv/config';
+// Load environment variables in development
+try {
+  if (process.env.NODE_ENV !== 'production') {
+    require('dotenv' + '/config');
+  }
+} catch (error) {
+  // Ignore dotenv errors in production
+}
 import fastify from 'fastify';
 import { serializerCompiler, validatorCompiler } from 'fastify-type-provider-zod';
 import logger from './logger';
