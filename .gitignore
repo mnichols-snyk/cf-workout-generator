@@ -1,4 +1,29 @@
-#OS Files
+# IDE and OS files
+.idea
+.vscode
+*.suo
+*.user
+*.sln
+*.DS_Store
+
+# Dependencies
+/node_modules
+/services/backend/node_modules
+/services/frontend/node_modules
+
+# Build output
+/services/backend/dist
+/services/frontend/build
+
+# Environment variables
+.env
+/services/backend/.env
+/services/frontend/.env
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 **/.DS_Store
 
 # Logs
