@@ -277,6 +277,8 @@ User: Has an option to toggle to the "Last 60 Days" view of the leaderboard.
 
 User: Can navigate to "Today's Workout" or other sections from this screen.
 
+User: From the "Today's Workout" screen, can tap the workout and see previous results including 1 rep, 3 rep or 5 rep max lifts for any barbell exercise.
+
 5.4. User Logging Workout Flow
 User: Logs into their gym's instance.
 
