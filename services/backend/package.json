@@ -2,7 +2,7 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "AI Workout Generator Backend",
-  "main": "dist/index.js",
+  "main": "dist/src/index.js",
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",

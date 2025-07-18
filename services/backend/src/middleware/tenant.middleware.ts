@@ -33,6 +33,8 @@ export async function tenantMiddleware(request: FastifyRequest, reply: FastifyRe
     const tenantId = isSuperuser ? null : user.gymId;
 
     await setTenantContext(prisma, tenantId, isSuperuser);
+
+    return;
   } catch (error) {
     return reply.code(401).send({ message: 'Invalid or expired token' });
   }

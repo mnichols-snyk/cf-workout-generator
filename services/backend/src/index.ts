@@ -6,19 +6,16 @@ try {
 } catch (error) {
   // Ignore dotenv errors in production
 }
-import fastify from 'fastify';
-import { serializerCompiler, validatorCompiler } from 'fastify-type-provider-zod';
+
+import { buildServer } from './server';
 import logger from './logger';
 import authRoutes from './modules/auth/auth.route';
+import superuserRoutes from './modules/superuser/superuser.route';
 
 const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 
-async function buildServer() {
-  const server = fastify({ logger });
-
-  // Set Zod as the default validator and serializer
-  server.setValidatorCompiler(validatorCompiler);
-  server.setSerializerCompiler(serializerCompiler);
+async function start() {
+  const server = buildServer();
 
   // Register JWT plugin
   await server.register(import('@fastify/jwt'), {
@@ -27,19 +24,15 @@ async function buildServer() {
 
   // Register routes
   await server.register(authRoutes, { prefix: '/api/auth' });
+  await server.register(superuserRoutes, { prefix: '/api/superuser' });
 
   // Health check route
   server.get('/health', async () => {
     return { status: 'ok' };
   });
 
-  return server;
-}
-
-async function start() {
-  const server = await buildServer();
   try {
-    await server.listen({ port, host: '0.0.0.0' }); // Listen on all interfaces
+    await server.listen({ port, host: '0.0.0.0' });
     logger.info(`Server listening on http://localhost:${port}`);
   } catch (err) {
     logger.error(err);

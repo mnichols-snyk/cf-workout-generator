@@ -41,11 +41,26 @@ Phase 1: Foundation & Core Multi-Tenancy (Weeks 1-8)
 [x] Implement Row-Level Security (RLS) policies on the gyms table (and other core tenant tables as they're added) to enforce data isolation.
 
 1.3. Superuser Features (Minimum Viable)
-[ ] Develop API and basic UI for Superuser to view registered gyms.
+[x] Develop API and basic UI for Superuser to view registered gyms.
+    - API: GET /api/superuser/gyms implemented with RBAC middleware
+    - Returns all gyms with superuser context (bypasses RLS)
+    - Authentication and authorization working correctly
 
-[ ] Develop API and basic UI for Superuser to set/update platform-wide Terms & Conditions.
+[x] Develop API and basic UI for Superuser to set/update platform-wide Terms & Conditions.
+    - API: POST /api/superuser/terms-and-conditions implemented
+    - Zod schema validation for content field
+    - Creates new T&C or updates existing (singleton pattern)
+    - Secured with RBAC middleware for SUPERUSER role only
 
-[ ] Develop API for Superuser to manually activate/deactivate a gym (for testing).
+[x] Develop API for Superuser to manually activate/deactivate a gym (for testing).
+    - API: POST /api/superuser/toggle-gym-status implemented
+    - Accepts gymId (UUID) and isActive (boolean) parameters
+    - Database schema updated with isActive field on Gym model
+    - Prisma migration applied successfully
+    - Validates gym existence before updating status
+
+[ ] Develop basic UI for Superuser features.
+    - APIs are complete and tested, ready for frontend implementation
 
 Phase 2: Tenant Onboarding & Core Gym Management (Weeks 9-16)
 2.1. Tenant Sign-up & Trial

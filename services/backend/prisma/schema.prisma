@@ -9,9 +9,10 @@ generator client {
 }
 
 model Gym {
-  id    String @id @default(uuid())
-  name  String @unique
-  users User[]
+  id       String  @id @default(uuid())
+  name     String  @unique
+  isActive Boolean @default(true)
+  users    User[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -33,4 +34,11 @@ enum Role {
   ADMIN
   COACH
   MEMBER
+}
+
+model TermsAndConditions {
+  id        String   @id @default(uuid())
+  content   String   @db.Text
+  version   Int      @unique @default(autoincrement())
+  createdAt DateTime @default(now())
 }

@@ -11,6 +11,8 @@ services:
       - NODE_ENV=production
       - DATABASE_URL=postgresql://user:password@db:5432/app_db
       - JWT_SECRET=your-super-secret-key-that-is-long-and-random
+      - SUPERUSER_EMAIL=superuser@example.com
+      - SUPERUSER_PASSWORD=supersecretpassword
     # env_file:
     #   - ./services/backend/.env
     depends_on:
