@@ -6,10 +6,7 @@ import { setTenantContext } from '../utils/tenant-context';
 /**
  * Middleware to authenticate users and set tenant context for RLS
  */
-export async function tenantMiddleware(
-  request: FastifyRequest,
-  reply: FastifyReply
-) {
+export async function tenantMiddleware(request: FastifyRequest, reply: FastifyReply) {
   try {
     // Extract JWT token from Authorization header
     const authHeader = request.headers.authorization;
@@ -18,9 +15,8 @@ export async function tenantMiddleware(
     }
 
     // Verify JWT token
-    const token = authHeader.substring(7);
     const decoded = await request.jwtVerify();
-    
+
     // Type assertion for the decoded JWT payload
     const user = decoded as {
       id: string;
@@ -35,9 +31,8 @@ export async function tenantMiddleware(
     // Set tenant context for RLS policies
     const isSuperuser = user.role === Role.SUPERUSER;
     const tenantId = isSuperuser ? null : user.gymId;
-    
-    await setTenantContext(prisma, tenantId, isSuperuser);
 
+    await setTenantContext(prisma, tenantId, isSuperuser);
   } catch (error) {
     return reply.code(401).send({ message: 'Invalid or expired token' });
   }
@@ -47,10 +42,7 @@ export async function tenantMiddleware(
  * Optional middleware for routes that don't require authentication
  * but should set tenant context if a valid token is provided
  */
-export async function optionalTenantMiddleware(
-  request: FastifyRequest,
-  reply: FastifyReply
-) {
+export async function optionalTenantMiddleware(request: FastifyRequest) {
   try {
     const authHeader = request.headers.authorization;
     if (authHeader && authHeader.startsWith('Bearer ')) {
@@ -63,10 +55,10 @@ export async function optionalTenantMiddleware(
       };
 
       request.user = user;
-      
+
       const isSuperuser = user.role === Role.SUPERUSER;
       const tenantId = isSuperuser ? null : user.gymId;
-      
+
       await setTenantContext(prisma, tenantId, isSuperuser);
     } else {
       // No authentication provided, set default context

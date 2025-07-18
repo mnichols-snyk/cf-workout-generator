@@ -1,5 +1,4 @@
 import { PrismaClient } from '@prisma/client';
-import { Role } from '@prisma/client';
 
 /**
  * Sets the tenant context for database queries to enforce Row-Level Security
@@ -10,13 +9,13 @@ import { Role } from '@prisma/client';
 export async function setTenantContext(
   prisma: PrismaClient,
   tenantId: string | null,
-  isSuperuser: boolean = false
+  isSuperuser: boolean = false,
 ): Promise<void> {
   // Set the tenant ID for RLS policies
   if (tenantId) {
     await prisma.$executeRaw`SELECT set_config('app.tenant_id', ${tenantId}, true)`;
   }
-  
+
   // Set superuser flag for RLS policies
   await prisma.$executeRaw`SELECT set_config('app.is_superuser', ${isSuperuser.toString()}, true)`;
 }
@@ -41,7 +40,7 @@ export async function withTenantContext<T>(
   prisma: PrismaClient,
   tenantId: string | null,
   isSuperuser: boolean,
-  fn: () => Promise<T>
+  fn: () => Promise<T>,
 ): Promise<T> {
   await setTenantContext(prisma, tenantId, isSuperuser);
   try {
